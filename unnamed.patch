@@ -1,0 +1,16 @@
+Index: src/xyz/ignatyev/IO/Input.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/xyz/ignatyev/IO/Input.java	(revision 3a07ccacab08e4c3d611fe784a2af086dbdd1269)
++++ src/xyz/ignatyev/IO/Input.java	(revision )
+@@ -12,7 +12,7 @@
+ 
+     public Input(){
+         map = new boolean[256];
+-
++//
+         for (int i = 0; i < map.length; i++){
+ 
+             final int KEY_CODE = i;

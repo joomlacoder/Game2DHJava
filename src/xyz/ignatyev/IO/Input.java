@@ -12,7 +12,7 @@ public class Input extends JComponent{
 
     public Input(){
         map = new boolean[256];
-
+//
         for (int i = 0; i < map.length; i++){
 
             final int KEY_CODE = i;
