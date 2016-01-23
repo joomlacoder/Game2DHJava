@@ -10,7 +10,7 @@ import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 
 /**
- * Created by Andrej on 22.01.2016.
+ * C reated by Andrej on 22.01.2016.
  */
 public abstract class Display {
     private static boolean created = false;

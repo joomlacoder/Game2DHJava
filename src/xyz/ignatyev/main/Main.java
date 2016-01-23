@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 
 /**
- * Created by Andrej on 22.01.2016.
+ * C reated by Andrej on 22.01.2016.
  */
 public class Main {
     public static void main(String[] args) {

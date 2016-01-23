@@ -1,7 +1,7 @@
 package xyz.ignatyev.utils;
 
 /**
- * Created by Andrej on 23.01.2016.
+ * C reated by Andrej on 23.01.2016.
  */
 public class Time {
     public static final long SECOND = 1000000000;

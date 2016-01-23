@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by Andrej on 23.01.2016.
+ * C reated by Andrej on 23.01.2016.
  */
 public class Game implements Runnable {
     public static int               WIDTH               = 800;

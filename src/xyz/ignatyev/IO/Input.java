@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 
 /**
- * Created by Andrej on 23.01.2016.
+ * C reated by Andrej on 23.01.2016.
  */
 public class Input extends JComponent{
     private boolean[] map;
