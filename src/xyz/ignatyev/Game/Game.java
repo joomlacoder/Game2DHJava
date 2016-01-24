@@ -1,5 +1,6 @@
 package xyz.ignatyev.Game;
 
+import xyz.ignatyev.Graphics.TextureAtlas;
 import xyz.ignatyev.IO.Input;
 import xyz.ignatyev.display.Display;
 import xyz.ignatyev.utils.Time;
@@ -20,12 +21,17 @@ public class Game implements Runnable {
     public static final float       UPDATE_RATE         = 60.0f;
     public static final float       UPDATE_INTERVAL     = Time.SECOND/UPDATE_RATE;
     public static final long        IDLE_TIME           = 1;
-
+    public static final String      ATLAS_FILE_NAME     = "textur_atlas.png";
 
     private Input input;
     private boolean running;
     private Thread gameThread;
     private Graphics2D graphics;
+    private TextureAtlas atlas;
+
+    //test
+    int x = 0, y = 0;
+    float speed = 3;
 
     public Game(){
         running = false;
@@ -33,6 +39,7 @@ public class Game implements Runnable {
         graphics = Display.getGraphics();
         input = new Input();
         Display.addInputListener(input);
+        atlas = new TextureAtlas(ATLAS_FILE_NAME);
     }
 
     public synchronized void start(){
@@ -59,17 +66,23 @@ public class Game implements Runnable {
     }
 
     private void update(){
-        if(input.getKey(KeyEvent.VK_UP));//--
-        if(input.getKey(KeyEvent.VK_DOWN));//++
-        if(input.getKey(KeyEvent.VK_LEFT));//-
-        if(input.getKey(KeyEvent.VK_RIGHT));//+
+        if (input.getKey(KeyEvent.VK_UP))
+            y -= speed;
 
+        if (input.getKey(KeyEvent.VK_DOWN))
+            y += speed;
+
+        if (input.getKey(KeyEvent.VK_LEFT))
+            x -= speed;
+
+        if (input.getKey(KeyEvent.VK_RIGHT))
+            x += speed;
     }
 
     private void render(){
         Display.clear();
         graphics.setColor(Color.cyan);
-
+        graphics.drawImage(atlas.cut(0, 0, 32, 32), 300+x, 300+y, null);
         Display.swapBuffers();
     }
 
@@ -77,55 +90,57 @@ public class Game implements Runnable {
         Display.destroy();
     }
 
-    @Override
     public void run() {
+
         int fps = 0;
         int upd = 0;
-        int updLups = 0;
+        int updl = 0;
+
         long count = 0;
 
         float delta = 0;
-        long lastTime =  Time.get();
 
-        while (running){
+        long lastTime = Time.get();
+        while (running) {
             long now = Time.get();
             long elapsedTime = now - lastTime;
             lastTime = now;
-            count +=elapsedTime;
+
+            count += elapsedTime;
 
             boolean render = false;
-            delta += elapsedTime/UPDATE_INTERVAL;
-
-            while (delta > 1){
+            delta += (elapsedTime / UPDATE_INTERVAL);
+            while (delta > 1) {
                 update();
-                delta--;
                 upd++;
-                if(render){
-                    updLups++;
-                }else {
+                delta--;
+                if (render) {
+                    updl++;
+                } else {
                     render = true;
                 }
             }
 
-            if(render) {
+            if (render) {
                 render();
                 fps++;
-            }else {
+            } else {
                 try {
                     Thread.sleep(IDLE_TIME);
-                }catch (InterruptedException e){
-                    System.err.println("Sleep Run: ");
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
 
-            if (count >= Time.SECOND){
-                Display.setTitle(TITLE + " || FPS: " + fps + " | Update: " + upd + " | UpdateL: " + updLups);
-                fps = 0;
+            if (count >= Time.SECOND) {
+                Display.setTitle(TITLE + " || Fps: " + fps + " | Upd: " + upd + " | Updl: " + updl);
                 upd = 0;
-                updLups = 0;
+                fps = 0;
+                updl = 0;
                 count = 0;
             }
+
         }
+
     }
 }

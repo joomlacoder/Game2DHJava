@@ -27,35 +27,33 @@ public abstract class Display {
         create(400, 400);
     }
 
-    public static void create(int width, int hight){
-        create(width, hight, "no Title");
+    public static void create(int width, int height){
+        create(width, height, "no Title");
     }
 
-    public static void create(int width, int hight, String title){
-        create(width, hight, title, 0xFF000000);
+    public static void create(int width, int height, String title){
+        create(width, height, title, 0xFF000000);
     }
 
-    public static void create(int width, int hight, String title, int _clearCalor){
-        create(width, hight, title, clearColor, 6);
+    public static void create(int width, int height, String title, int _clearColor){
+        create(width, height, title, _clearColor, 6);
     }
 
-    public static void create(int width, int hight, String title, int _clearCalor, int numberBuffers){
-        create(width, hight, title, clearColor, numberBuffers, false);
+    public static void create(int width, int height, String title, int _clearColor, int numberBuffers){
+        create(width, height, title, _clearColor, numberBuffers, false);
     }
 
-    public static void create(int width, int hight, String title, int _clearCalor, int numberBuffers, boolean reSize){
+    public static void create(int width, int height, String title, int _clearColor, int numberBuffers, boolean reSize){
 
-        if(created){
+        if (created)
             return;
-        }
 
         window = new JFrame(title);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         content = new Canvas();
 
-        Dimension size = new Dimension(width, hight);
+        Dimension size = new Dimension(width, height);
         content.setPreferredSize(size);
-        content.setBackground(new Color(_clearCalor));
 
         window.setResizable(reSize);
         window.getContentPane().add(content);
@@ -63,44 +61,51 @@ public abstract class Display {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        buffer = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
-        bufferData = ((DataBufferInt)buffer.getRaster().getDataBuffer()).getData();
+        buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        bufferData = ((DataBufferInt) buffer.getRaster().getDataBuffer()).getData();
         bufferGraphics = buffer.getGraphics();
-        ((Graphics2D)bufferGraphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        clearColor = _clearCalor;
+        ((Graphics2D) bufferGraphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        clearColor = _clearColor;
 
         content.createBufferStrategy(numberBuffers);
         bufferStrategy = content.getBufferStrategy();
 
         created = true;
+
     }
 
-    public static void clear(){
+
+
+    public static void clear() {
         Arrays.fill(bufferData, clearColor);
     }
 
-    public static void setTitle(String title){
-        window.setTitle(title);
-    }
-
-    public static Graphics2D getGraphics(){
-        return (Graphics2D)bufferGraphics;
-    }
-
-    public static void destroy(){
-        if(!created){
-            return;
-        }
-        window.dispose();
-    }
-
-    public static void addInputListener(Input imputListener){
-        window.add(imputListener);
-    }
-
-    public static void swapBuffers(){
+    public static void swapBuffers() {
         Graphics g = bufferStrategy.getDrawGraphics();
         g.drawImage(buffer, 0, 0, null);
         bufferStrategy.show();
+    }
+
+    public static Graphics2D getGraphics() {
+        return (Graphics2D) bufferGraphics;
+    }
+
+    public static void destroy() {
+
+        if (!created)
+            return;
+
+        window.dispose();
+
+    }
+
+    public static void setTitle(String title) {
+
+        window.setTitle(title);
+
+    }
+
+    public static void addInputListener(Input inputListener) {
+        window.add(inputListener);
     }
 }
