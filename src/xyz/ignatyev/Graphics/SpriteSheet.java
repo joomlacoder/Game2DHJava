@@ -18,8 +18,10 @@ public class SpriteSheet {
         spritesInWidth = sheet.getWidth() / scale;
     }
 
-    /*public BufferedImage getSprite(int index){
+    public BufferedImage getSprite(int index){
         index = index % spriteCount;
-        return
-    }*/
+        int x = index % spritesInWidth * scale;
+        int y = index / spritesInWidth * scale;
+        return sheet.getSubimage(x, y, scale, scale);
+    }
 }
