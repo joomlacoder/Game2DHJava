@@ -1,5 +1,7 @@
 package xyz.ignatyev.Game;
 
+import xyz.ignatyev.Graphics.Sprite;
+import xyz.ignatyev.Graphics.SpriteSheet;
 import xyz.ignatyev.Graphics.TextureAtlas;
 import xyz.ignatyev.IO.Input;
 import xyz.ignatyev.display.Display;
@@ -28,6 +30,9 @@ public class Game implements Runnable {
     private Thread gameThread;
     private Graphics2D graphics;
     private TextureAtlas atlas;
+    private SpriteSheet sheet;
+    private Sprite sprite;
+
 
     //test
     int x = 0, y = 0;
@@ -40,6 +45,8 @@ public class Game implements Runnable {
         input = new Input();
         Display.addInputListener(input);
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
+        sheet = new SpriteSheet(atlas.cut(8 * 16, 5 * 16, 16 * 2, 16), 2, 16);//Дописать пиксели
+        sprite = new Sprite(sheet, 1);
     }
 
     public synchronized void start(){
@@ -81,8 +88,7 @@ public class Game implements Runnable {
 
     private void render(){
         Display.clear();
-        graphics.setColor(Color.cyan);
-        graphics.drawImage(atlas.cut(0, 0, 32, 32), 300+x, 300+y, null);
+        sprite.render(graphics, x, y);
         Display.swapBuffers();
     }
 
