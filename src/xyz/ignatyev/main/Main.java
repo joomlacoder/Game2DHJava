@@ -1,11 +1,6 @@
 package xyz.ignatyev.main;
 
-import xyz.ignatyev.Game.Game;
-import xyz.ignatyev.display.Display;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import xyz.ignatyev.game.Game;
 
 /**
  * C reated by Andrej on 22.01.2016.

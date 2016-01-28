@@ -1,4 +1,4 @@
-package xyz.ignatyev.Graphics;
+package xyz.ignatyev.graphics;
 
 import xyz.ignatyev.utils.ResourceLoader;
 

@@ -1,8 +1,8 @@
-package xyz.ignatyev.Game;
+package xyz.ignatyev.game;
 
-import xyz.ignatyev.Graphics.Sprite;
-import xyz.ignatyev.Graphics.SpriteSheet;
-import xyz.ignatyev.Graphics.TextureAtlas;
+import xyz.ignatyev.graphics.Sprite;
+import xyz.ignatyev.graphics.SpriteSheet;
+import xyz.ignatyev.graphics.TextureAtlas;
 import xyz.ignatyev.IO.Input;
 import xyz.ignatyev.display.Display;
 import xyz.ignatyev.utils.Time;
