@@ -1,20 +1,19 @@
 package xyz.ignatyev.game;
 
-import xyz.ignatyev.graphics.Sprite;
-import xyz.ignatyev.graphics.SpriteSheet;
+import xyz.ignatyev.game.level.Level;
 import xyz.ignatyev.graphics.TextureAtlas;
 import xyz.ignatyev.IO.Input;
 import xyz.ignatyev.display.Display;
 import xyz.ignatyev.utils.Time;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /**
- * C reated by Andrej on 23.01.2016.
+ * @author Andrej
+ *  23.01.2016.
  */
 public class Game implements Runnable {
-    public static int               WIDTH               = 800;
+    public static int               WEIDTH              = 800;
     public static int               HIGHT               = 600;
     public static String            TITLE               = "Tanks";
     public static int               CLEAR_COLOR         = 0xFF000000;
@@ -30,23 +29,19 @@ public class Game implements Runnable {
     private Thread gameThread;
     private Graphics2D graphics;
     private TextureAtlas atlas;
-    private SpriteSheet sheet;
-    private Sprite sprite;
+    private Player player;
+    private Level level;
 
-
-    //test
-    int x = 0, y = 0;
-    float speed = 3;
 
     public Game(){
         running = false;
-        Display.create(WIDTH, HIGHT, TITLE, CLEAR_COLOR, NUMBER_BUFFERS);
+        Display.create(WEIDTH, HIGHT, TITLE, CLEAR_COLOR, NUMBER_BUFFERS);
         graphics = Display.getGraphics();
         input = new Input();
         Display.addInputListener(input);
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
-        sheet = new SpriteSheet(atlas.cut(8 * 16, 5 * 16, 16 * 2, 16), 2, 16);//Дописать пиксели
-        sprite = new Sprite(sheet, 1);
+        player = new Player(300, 300, 2, 3, atlas);
+        level = new Level(atlas);
     }
 
     public synchronized void start(){
@@ -73,22 +68,15 @@ public class Game implements Runnable {
     }
 
     private void update(){
-        if (input.getKey(KeyEvent.VK_UP))
-            y -= speed;
-
-        if (input.getKey(KeyEvent.VK_DOWN))
-            y += speed;
-
-        if (input.getKey(KeyEvent.VK_LEFT))
-            x -= speed;
-
-        if (input.getKey(KeyEvent.VK_RIGHT))
-            x += speed;
+        player.update(input);
+        level.update();//add
     }
 
     private void render(){
         Display.clear();
-        sprite.render(graphics, x, y);
+        level.render(graphics);
+        player.render(graphics);
+        level.renderGrass(graphics);
         Display.swapBuffers();
     }
 
